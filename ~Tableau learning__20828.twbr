@@ -30,6 +30,16 @@
         <calculation class='tableau' formula='8' />
         <range max='10' min='1' />
       </column>
+      <column caption='Select Top N' datatype='integer' name='[Parameter 2]' param-domain-type='list' role='measure' type='quantitative' value='5'>
+        <calculation class='tableau' formula='5' />
+        <members>
+          <member value='1' />
+          <member value='2' />
+          <member value='3' />
+          <member value='4' />
+          <member value='5' />
+        </members>
+      </column>
     </datasource>
     <datasource caption='Orders (sample_-_superstore)' inline='true' name='federated.1700jyp1ve4yi5128ax1g0r6i3jg' version='18.1'>
       <connection class='federated'>
@@ -1181,6 +1191,62 @@
       </table>
       <simple-id uuid='{20962A79-0C56-460A-9DA9-8834CEB1FC84}' />
     </worksheet>
+    <worksheet name='Filter with parameter(list)'>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='Orders (sample_-_superstore) (2)' name='federated.0qx6x4n00ebwz416mvhcr0cqtpo4' />
+            <datasource name='Parameters' />
+          </datasources>
+          <datasource-dependencies datasource='Parameters'>
+            <column caption='Select Top N' datatype='integer' name='[Parameter 2]' param-domain-type='list' role='measure' type='quantitative' value='5'>
+              <calculation class='tableau' formula='5' />
+            </column>
+          </datasource-dependencies>
+          <datasource-dependencies datasource='federated.0qx6x4n00ebwz416mvhcr0cqtpo4'>
+            <column datatype='real' name='[Sales]' role='measure' type='quantitative' />
+            <column datatype='string' name='[Sub-Category]' role='dimension' type='nominal' />
+            <column-instance column='[Sub-Category]' derivation='None' name='[none:Sub-Category:nk]' pivot='key' type='nominal' />
+            <column-instance column='[Sales]' derivation='Sum' name='[sum:Sales:qk]' pivot='key' type='quantitative' />
+          </datasource-dependencies>
+          <filter class='categorical' column='[federated.0qx6x4n00ebwz416mvhcr0cqtpo4].[none:Sub-Category:nk]'>
+            <groupfilter count='[Parameters].[Parameter 2]' end='top' function='end' units='records' user:ui-marker='end' user:ui-top-by-field='true'>
+              <groupfilter direction='DESC' expression='SUM([Sales])' function='order' user:ui-marker='order'>
+                <groupfilter function='level-members' level='[none:Sub-Category:nk]' user:ui-enumeration='all' user:ui-marker='enumerate' />
+              </groupfilter>
+            </groupfilter>
+          </filter>
+          <shelf-sorts>
+            <shelf-sort-v2 dimension-to-sort='[federated.0qx6x4n00ebwz416mvhcr0cqtpo4].[none:Sub-Category:nk]' direction='DESC' is-on-innermost-dimension='true' measure-to-sort-by='[federated.0qx6x4n00ebwz416mvhcr0cqtpo4].[sum:Sales:qk]' shelf='columns' />
+          </shelf-sorts>
+          <slices>
+            <column>[federated.0qx6x4n00ebwz416mvhcr0cqtpo4].[none:Sub-Category:nk]</column>
+          </slices>
+          <aggregation value='true' />
+        </view>
+        <style />
+        <panes>
+          <pane selection-relaxation-option='selection-relaxation-allow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Automatic' />
+            <encodings>
+              <text column='[federated.0qx6x4n00ebwz416mvhcr0cqtpo4].[sum:Sales:qk]' />
+            </encodings>
+            <style>
+              <style-rule element='mark'>
+                <format attr='mark-labels-show' value='true' />
+                <format attr='mark-labels-cull' value='true' />
+              </style-rule>
+            </style>
+          </pane>
+        </panes>
+        <rows>[federated.0qx6x4n00ebwz416mvhcr0cqtpo4].[sum:Sales:qk]</rows>
+        <cols>[federated.0qx6x4n00ebwz416mvhcr0cqtpo4].[none:Sub-Category:nk]</cols>
+      </table>
+      <simple-id uuid='{181A5C6B-C18A-427F-A23B-9458C5C6FEB9}' />
+    </worksheet>
     <worksheet name='Map'>
       <table>
         <view>
@@ -1332,16 +1398,29 @@
       </table>
       <simple-id uuid='{28CD8BAC-50A2-477F-A09C-CA7704A0C5B3}' />
     </worksheet>
-    <worksheet name='Sheet 11'>
+    <worksheet name='Sheet 12'>
       <table>
         <view>
           <datasources>
             <datasource caption='Orders (sample_-_superstore) (2)' name='federated.0qx6x4n00ebwz416mvhcr0cqtpo4' />
           </datasources>
           <datasource-dependencies datasource='federated.0qx6x4n00ebwz416mvhcr0cqtpo4'>
+            <column datatype='real' name='[Sales]' role='measure' type='quantitative' />
             <column datatype='string' name='[Sub-Category]' role='dimension' type='nominal' />
             <column-instance column='[Sub-Category]' derivation='None' name='[none:Sub-Category:nk]' pivot='key' type='nominal' />
+            <column-instance column='[Sales]' derivation='Sum' name='[sum:Sales:qk]' pivot='key' type='quantitative' />
           </datasource-dependencies>
+          <filter class='categorical' column='[federated.0qx6x4n00ebwz416mvhcr0cqtpo4].[none:Sub-Category:nk]'>
+            <groupfilter expression='ENDSWITH([Sub-Category], &apos;es&apos;)' function='filter' user:ui-enumeration='inclusive' user:ui-pattern-include-all-when-empty='true' user:ui-pattern_text='es' user:ui-pattern_type='ends-with'>
+              <groupfilter function='except' user:ui-domain='database' user:ui-enumeration='inclusive' user:ui-marker='enumerate'>
+                <groupfilter function='level-members' level='[none:Sub-Category:nk]' />
+                <groupfilter function='member' level='[none:Sub-Category:nk]' member='%null%' />
+              </groupfilter>
+            </groupfilter>
+          </filter>
+          <slices>
+            <column>[federated.0qx6x4n00ebwz416mvhcr0cqtpo4].[none:Sub-Category:nk]</column>
+          </slices>
           <aggregation value='true' />
         </view>
         <style />
@@ -1351,12 +1430,21 @@
               <breakdown value='auto' />
             </view>
             <mark class='Automatic' />
+            <encodings>
+              <text column='[federated.0qx6x4n00ebwz416mvhcr0cqtpo4].[sum:Sales:qk]' />
+            </encodings>
+            <style>
+              <style-rule element='mark'>
+                <format attr='mark-labels-show' value='true' />
+                <format attr='mark-labels-cull' value='true' />
+              </style-rule>
+            </style>
           </pane>
         </panes>
-        <rows />
-        <cols>[federated.0qx6x4n00ebwz416mvhcr0cqtpo4].[none:Sub-Category:nk]</cols>
+        <rows>[federated.0qx6x4n00ebwz416mvhcr0cqtpo4].[none:Sub-Category:nk]</rows>
+        <cols />
       </table>
-      <simple-id uuid='{181A5C6B-C18A-427F-A23B-9458C5C6FEB9}' />
+      <simple-id uuid='{E06BEE09-3A6C-4A4E-ACE7-3E460BEEB899}' />
     </worksheet>
     <worksheet name='Sheet 2'>
       <table>
@@ -1711,7 +1799,7 @@
       </cards>
       <simple-id uuid='{8BB72A37-264D-4549-A52A-7FFE38284FDC}' />
     </window>
-    <window class='worksheet' maximized='true' name='Sheet 11'>
+    <window class='worksheet' name='Filter with parameter(list)'>
       <cards>
         <edge name='left'>
           <strip size='160'>
@@ -1731,8 +1819,41 @@
             <card type='title' />
           </strip>
         </edge>
+        <edge name='right'>
+          <strip size='160'>
+            <card mode='compact' param='[Parameters].[Parameter 2]' type='parameter' />
+          </strip>
+        </edge>
       </cards>
       <simple-id uuid='{B73DDC3D-21DD-4AFD-A9B3-ABA82CE56F2F}' />
+    </window>
+    <window class='worksheet' maximized='true' name='Sheet 12'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+          <strip size='31'>
+            <card type='title' />
+          </strip>
+        </edge>
+        <edge name='bottom'>
+          <strip size='96'>
+            <card type='caption' />
+          </strip>
+        </edge>
+      </cards>
+      <simple-id uuid='{D147C49B-BEEB-406D-A5AA-6C34E52F1086}' />
     </window>
   </windows>
 </workbook>
