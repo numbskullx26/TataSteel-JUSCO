@@ -910,7 +910,8 @@
         </style-rule>
       </style>
       <semantic-values>
-        <semantic-value key='[Country].[Name]' value='&quot;India&quot;' />
+        <semantic-value key='[Country].[Name]' value='&quot;United States&quot;' />
+        <semantic-value key='[State].[Name]' value='%null%' />
       </semantic-values>
       <_.fcp.ObjectModelEncapsulateLegacy.true...object-graph>
         <objects>
@@ -1024,6 +1025,53 @@
         <cols>[federated.0qx6x4n00ebwz416mvhcr0cqtpo4].[none:Sub-Category:nk]</cols>
       </table>
       <simple-id uuid='{C879E0F5-FAC6-43F6-A2BE-DCC12FA61117}' />
+    </worksheet>
+    <worksheet name='Map'>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='Orders (sample_-_superstore) (2)' name='federated.0qx6x4n00ebwz416mvhcr0cqtpo4' />
+          </datasources>
+          <mapsources>
+            <mapsource name='Tableau' />
+          </mapsources>
+          <datasource-dependencies datasource='federated.0qx6x4n00ebwz416mvhcr0cqtpo4'>
+            <column datatype='real' name='[Profit]' role='measure' type='quantitative' />
+            <column datatype='string' name='[State]' role='dimension' semantic-role='[State].[Name]' type='nominal' />
+            <column-instance column='[State]' derivation='None' name='[none:State:nk]' pivot='key' type='nominal' />
+            <column-instance column='[Profit]' derivation='Sum' name='[sum:Profit:qk]' pivot='key' type='quantitative' />
+          </datasource-dependencies>
+          <aggregation value='true' />
+        </view>
+        <style>
+          <style-rule element='map'>
+            <format attr='washout' value='0.0' />
+          </style-rule>
+        </style>
+        <panes>
+          <pane selection-relaxation-option='selection-relaxation-allow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Multipolygon' />
+            <encodings>
+              <color column='[federated.0qx6x4n00ebwz416mvhcr0cqtpo4].[sum:Profit:qk]' />
+              <text column='[federated.0qx6x4n00ebwz416mvhcr0cqtpo4].[none:State:nk]' />
+              <lod column='[federated.0qx6x4n00ebwz416mvhcr0cqtpo4].[none:State:nk]' />
+              <geometry column='[federated.0qx6x4n00ebwz416mvhcr0cqtpo4].[Geometry (generated)]' />
+            </encodings>
+            <style>
+              <style-rule element='mark'>
+                <format attr='mark-labels-show' value='true' />
+                <format attr='mark-labels-cull' value='true' />
+              </style-rule>
+            </style>
+          </pane>
+        </panes>
+        <rows>[federated.0qx6x4n00ebwz416mvhcr0cqtpo4].[Latitude (generated)]</rows>
+        <cols>[federated.0qx6x4n00ebwz416mvhcr0cqtpo4].[Longitude (generated)]</cols>
+      </table>
+      <simple-id uuid='{0D5715BC-F112-4EF4-948D-390984BE246D}' />
     </worksheet>
     <worksheet name='Pie Chart'>
       <table>
@@ -1172,6 +1220,46 @@
       </table>
       <simple-id uuid='{2E1D0D79-4844-479E-88DF-4E97767FEF2E}' />
     </worksheet>
+    <worksheet name='Stacked Bar Chart'>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='Orders (sample_-_superstore) (2)' name='federated.0qx6x4n00ebwz416mvhcr0cqtpo4' />
+          </datasources>
+          <datasource-dependencies datasource='federated.0qx6x4n00ebwz416mvhcr0cqtpo4'>
+            <column datatype='string' name='[Region]' role='dimension' type='nominal' />
+            <column datatype='real' name='[Sales]' role='measure' type='quantitative' />
+            <column datatype='string' name='[Sub-Category]' role='dimension' type='nominal' />
+            <column-instance column='[Region]' derivation='None' name='[none:Region:nk]' pivot='key' type='nominal' />
+            <column-instance column='[Sub-Category]' derivation='None' name='[none:Sub-Category:nk]' pivot='key' type='nominal' />
+            <column-instance column='[Sales]' derivation='Sum' name='[sum:Sales:qk]' pivot='key' type='quantitative' />
+          </datasource-dependencies>
+          <aggregation value='true' />
+        </view>
+        <style />
+        <panes>
+          <pane selection-relaxation-option='selection-relaxation-allow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Automatic' />
+            <encodings>
+              <color column='[federated.0qx6x4n00ebwz416mvhcr0cqtpo4].[none:Region:nk]' />
+              <text column='[federated.0qx6x4n00ebwz416mvhcr0cqtpo4].[sum:Sales:qk]' />
+            </encodings>
+            <style>
+              <style-rule element='mark'>
+                <format attr='mark-labels-show' value='true' />
+                <format attr='mark-labels-cull' value='true' />
+              </style-rule>
+            </style>
+          </pane>
+        </panes>
+        <rows>[federated.0qx6x4n00ebwz416mvhcr0cqtpo4].[sum:Sales:qk]</rows>
+        <cols>[federated.0qx6x4n00ebwz416mvhcr0cqtpo4].[none:Sub-Category:nk]</cols>
+      </table>
+      <simple-id uuid='{32518BDF-A924-448D-B0DA-6C7C9B954DB7}' />
+    </worksheet>
   </worksheets>
   <windows source-height='51'>
     <window class='worksheet' name='Sheet 1'>
@@ -1280,7 +1368,7 @@
       </cards>
       <simple-id uuid='{F68878A1-45C9-4A4E-9BDC-DE33C994F703}' />
     </window>
-    <window class='worksheet' maximized='true' name='Pie Chart'>
+    <window class='worksheet' name='Pie Chart'>
       <cards>
         <edge name='left'>
           <strip size='160'>
@@ -1311,6 +1399,62 @@
         <zoom type='entire-view' />
       </viewpoint>
       <simple-id uuid='{8203E6D5-E866-49C3-AD3E-6977B3C17716}' />
+    </window>
+    <window class='worksheet' name='Map'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+          <strip size='31'>
+            <card type='title' />
+          </strip>
+        </edge>
+        <edge name='right'>
+          <strip size='160'>
+            <card pane-specification-id='0' param='[federated.0qx6x4n00ebwz416mvhcr0cqtpo4].[sum:Profit:qk]' type='color' />
+          </strip>
+        </edge>
+      </cards>
+      <simple-id uuid='{855D3F80-AD18-4CD6-80D0-67FC0A805FD0}' />
+    </window>
+    <window class='worksheet' maximized='true' name='Stacked Bar Chart'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+          <strip size='31'>
+            <card type='title' />
+          </strip>
+        </edge>
+        <edge name='right'>
+          <strip size='160'>
+            <card pane-specification-id='0' param='[federated.0qx6x4n00ebwz416mvhcr0cqtpo4].[none:Region:nk]' type='color' />
+          </strip>
+        </edge>
+      </cards>
+      <simple-id uuid='{C38AD041-D059-4DA4-846F-C969D618EE0D}' />
     </window>
   </windows>
 </workbook>
