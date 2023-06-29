@@ -1220,6 +1220,26 @@
       </table>
       <simple-id uuid='{2E1D0D79-4844-479E-88DF-4E97767FEF2E}' />
     </worksheet>
+    <worksheet name='Sheet 8'>
+      <table>
+        <view>
+          <datasources />
+          <aggregation value='true' />
+        </view>
+        <style />
+        <panes>
+          <pane selection-relaxation-option='selection-relaxation-allow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Automatic' />
+          </pane>
+        </panes>
+        <rows />
+        <cols />
+      </table>
+      <simple-id uuid='{D9F783BE-2608-46FE-BC43-57F7DE97B252}' />
+    </worksheet>
     <worksheet name='Stacked Bar Chart'>
       <table>
         <view>
@@ -1428,7 +1448,7 @@
       </cards>
       <simple-id uuid='{855D3F80-AD18-4CD6-80D0-67FC0A805FD0}' />
     </window>
-    <window class='worksheet' maximized='true' name='Stacked Bar Chart'>
+    <window class='worksheet' name='Stacked Bar Chart'>
       <cards>
         <edge name='left'>
           <strip size='160'>
@@ -1455,6 +1475,29 @@
         </edge>
       </cards>
       <simple-id uuid='{C38AD041-D059-4DA4-846F-C969D618EE0D}' />
+    </window>
+    <window class='worksheet' maximized='true' name='Sheet 8'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='31'>
+            <card type='columns' />
+          </strip>
+          <strip size='31'>
+            <card type='rows' />
+          </strip>
+          <strip size='31'>
+            <card type='title' />
+          </strip>
+        </edge>
+      </cards>
+      <simple-id uuid='{2B8C2631-2383-42DE-A0C5-228F77646A64}' />
     </window>
   </windows>
 </workbook>
