@@ -904,6 +904,9 @@
       <column caption='Sales 2017' datatype='real' name='[Calculation_917326991621132291]' role='measure' type='quantitative'>
         <calculation class='tableau' formula='IF YEAR([Order Date])=2017 THEN [Sales] END' />
       </column>
+      <column caption='Check' datatype='boolean' name='[Calculation_917326991626088452]' role='measure' type='nominal'>
+        <calculation class='tableau' formula='SUM([Calculation_917326991620390914])&gt;SUM([Calculation_917326991621132291])' />
+      </column>
       <column datatype='string' name='[City]' role='dimension' semantic-role='[City].[Name]' type='nominal' />
       <column datatype='string' name='[Country]' role='dimension' semantic-role='[Country].[ISO3166_2]' type='nominal' />
       <column datatype='real' name='[Discount]' role='measure' type='quantitative' />
@@ -1141,6 +1144,68 @@
     <mapsource name='Tableau' />
   </mapsources>
   <worksheets>
+    <worksheet name='Analysis and Comparison'>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='Orders (sample_-_superstore) (2)' name='federated.0qx6x4n00ebwz416mvhcr0cqtpo4' />
+          </datasources>
+          <datasource-dependencies datasource='federated.0qx6x4n00ebwz416mvhcr0cqtpo4'>
+            <column caption='Sales 2016' datatype='real' name='[Calculation_917326991620390914]' role='measure' type='quantitative'>
+              <calculation class='tableau' formula='IF YEAR([Order Date])= 2016 THEN [Sales] END' />
+            </column>
+            <column caption='Sales 2017' datatype='real' name='[Calculation_917326991621132291]' role='measure' type='quantitative'>
+              <calculation class='tableau' formula='IF YEAR([Order Date])=2017 THEN [Sales] END' />
+            </column>
+            <column caption='Check' datatype='boolean' name='[Calculation_917326991626088452]' role='measure' type='nominal'>
+              <calculation class='tableau' formula='SUM([Calculation_917326991620390914])&gt;SUM([Calculation_917326991621132291])' />
+            </column>
+            <column datatype='date' name='[Order Date]' role='dimension' type='ordinal' />
+            <column datatype='real' name='[Sales]' role='measure' type='quantitative' />
+            <column datatype='string' name='[Sub-Category]' role='dimension' type='nominal' />
+            <column-instance column='[Sub-Category]' derivation='None' name='[none:Sub-Category:nk]' pivot='key' type='nominal' />
+            <column-instance column='[Calculation_917326991620390914]' derivation='Sum' name='[sum:Calculation_917326991620390914:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[Calculation_917326991621132291]' derivation='Sum' name='[sum:Calculation_917326991621132291:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[Calculation_917326991626088452]' derivation='User' name='[usr:Calculation_917326991626088452:nk]' pivot='key' type='nominal' />
+          </datasource-dependencies>
+          <aggregation value='true' />
+        </view>
+        <style>
+          <style-rule element='refline'>
+            <format attr='stroke-color' id='refline0' value='#000000' />
+          </style-rule>
+          <style-rule element='table-div'>
+            <format attr='div-level' scope='rows' value='10' />
+            <format attr='div-level' scope='cols' value='10' />
+          </style-rule>
+        </style>
+        <panes>
+          <pane selection-relaxation-option='selection-relaxation-allow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Automatic' />
+            <encodings>
+              <color column='[federated.0qx6x4n00ebwz416mvhcr0cqtpo4].[usr:Calculation_917326991626088452:nk]' />
+              <lod column='[federated.0qx6x4n00ebwz416mvhcr0cqtpo4].[sum:Calculation_917326991620390914:qk]' />
+            </encodings>
+            <reference-line axis-column='[federated.0qx6x4n00ebwz416mvhcr0cqtpo4].[sum:Calculation_917326991621132291:qk]' enable-instant-analytics='true' formula='average' id='refline0' label-type='none' probability='95' scope='per-cell' value-column='[federated.0qx6x4n00ebwz416mvhcr0cqtpo4].[sum:Calculation_917326991620390914:qk]' z-order='2' />
+            <reference-line axis-column='[federated.0qx6x4n00ebwz416mvhcr0cqtpo4].[sum:Calculation_917326991621132291:qk]' enable-instant-analytics='true' fill-above='true' fill-below='true' formula='average' id='refline1' label-type='none' percentage-bands='true' probability='95' scope='per-cell' symmetric='false' value-column='[federated.0qx6x4n00ebwz416mvhcr0cqtpo4].[sum:Calculation_917326991620390914:qk]' z-order='1'>
+              <reference-line-value percentage='60' />
+              <reference-line-value percentage='80' />
+            </reference-line>
+            <style>
+              <style-rule element='mark'>
+                <format attr='size' value='1' />
+              </style-rule>
+            </style>
+          </pane>
+        </panes>
+        <rows>[federated.0qx6x4n00ebwz416mvhcr0cqtpo4].[none:Sub-Category:nk]</rows>
+        <cols>[federated.0qx6x4n00ebwz416mvhcr0cqtpo4].[sum:Calculation_917326991621132291:qk]</cols>
+      </table>
+      <simple-id uuid='{B53C0650-2A11-44BF-B7B0-D345E1E69403}' />
+    </worksheet>
     <worksheet name='Bar Chart'>
       <table>
         <view>
@@ -1664,63 +1729,6 @@
         <cols />
       </table>
       <simple-id uuid='{F6EA657F-C8E6-4407-81CC-5A7E545D6B64}' />
-    </worksheet>
-    <worksheet name='Sheet 17'>
-      <table>
-        <view>
-          <datasources>
-            <datasource caption='Orders (sample_-_superstore) (2)' name='federated.0qx6x4n00ebwz416mvhcr0cqtpo4' />
-          </datasources>
-          <datasource-dependencies datasource='federated.0qx6x4n00ebwz416mvhcr0cqtpo4'>
-            <column caption='Sales 2016' datatype='real' name='[Calculation_917326991620390914]' role='measure' type='quantitative'>
-              <calculation class='tableau' formula='IF YEAR([Order Date])= 2016 THEN [Sales] END' />
-            </column>
-            <column caption='Sales 2017' datatype='real' name='[Calculation_917326991621132291]' role='measure' type='quantitative'>
-              <calculation class='tableau' formula='IF YEAR([Order Date])=2017 THEN [Sales] END' />
-            </column>
-            <column datatype='date' name='[Order Date]' role='dimension' type='ordinal' />
-            <column datatype='real' name='[Sales]' role='measure' type='quantitative' />
-            <column datatype='string' name='[Sub-Category]' role='dimension' type='nominal' />
-            <column-instance column='[Sub-Category]' derivation='None' name='[none:Sub-Category:nk]' pivot='key' type='nominal' />
-            <column-instance column='[Calculation_917326991620390914]' derivation='Sum' name='[sum:Calculation_917326991620390914:qk]' pivot='key' type='quantitative' />
-            <column-instance column='[Calculation_917326991621132291]' derivation='Sum' name='[sum:Calculation_917326991621132291:qk]' pivot='key' type='quantitative' />
-          </datasource-dependencies>
-          <aggregation value='true' />
-        </view>
-        <style>
-          <style-rule element='refline'>
-            <format attr='stroke-color' id='refline0' value='#000000' />
-          </style-rule>
-          <style-rule element='table-div'>
-            <format attr='div-level' scope='rows' value='10' />
-            <format attr='div-level' scope='cols' value='10' />
-          </style-rule>
-        </style>
-        <panes>
-          <pane selection-relaxation-option='selection-relaxation-allow'>
-            <view>
-              <breakdown value='auto' />
-            </view>
-            <mark class='Automatic' />
-            <encodings>
-              <lod column='[federated.0qx6x4n00ebwz416mvhcr0cqtpo4].[sum:Calculation_917326991621132291:qk]' />
-            </encodings>
-            <reference-line axis-column='[federated.0qx6x4n00ebwz416mvhcr0cqtpo4].[sum:Calculation_917326991620390914:qk]' enable-instant-analytics='true' formula='average' id='refline0' label-type='none' probability='95' scope='per-cell' value-column='[federated.0qx6x4n00ebwz416mvhcr0cqtpo4].[sum:Calculation_917326991621132291:qk]' z-order='2' />
-            <reference-line axis-column='[federated.0qx6x4n00ebwz416mvhcr0cqtpo4].[sum:Calculation_917326991620390914:qk]' enable-instant-analytics='true' fill-above='true' fill-below='true' formula='average' id='refline1' label-type='none' percentage-bands='true' probability='95' scope='per-cell' symmetric='false' value-column='[federated.0qx6x4n00ebwz416mvhcr0cqtpo4].[sum:Calculation_917326991621132291:qk]' z-order='1'>
-              <reference-line-value percentage='60' />
-              <reference-line-value percentage='80' />
-            </reference-line>
-            <style>
-              <style-rule element='mark'>
-                <format attr='size' value='1' />
-              </style-rule>
-            </style>
-          </pane>
-        </panes>
-        <rows>[federated.0qx6x4n00ebwz416mvhcr0cqtpo4].[none:Sub-Category:nk]</rows>
-        <cols>[federated.0qx6x4n00ebwz416mvhcr0cqtpo4].[sum:Calculation_917326991620390914:qk]</cols>
-      </table>
-      <simple-id uuid='{B53C0650-2A11-44BF-B7B0-D345E1E69403}' />
     </worksheet>
     <worksheet name='Sheet 2'>
       <table>
@@ -2417,7 +2425,7 @@
       </cards>
       <simple-id uuid='{7AB569FE-8AB5-4A7C-9666-9FBB793F4250}' />
     </window>
-    <window class='worksheet' maximized='true' name='Sheet 17'>
+    <window class='worksheet' maximized='true' name='Analysis and Comparison'>
       <cards>
         <edge name='left'>
           <strip size='160'>
@@ -2435,6 +2443,11 @@
           </strip>
           <strip size='31'>
             <card type='title' />
+          </strip>
+        </edge>
+        <edge name='right'>
+          <strip size='160'>
+            <card pane-specification-id='0' param='[federated.0qx6x4n00ebwz416mvhcr0cqtpo4].[usr:Calculation_917326991626088452:nk]' type='color' />
           </strip>
         </edge>
       </cards>
